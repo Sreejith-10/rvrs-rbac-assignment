@@ -1,18 +1,23 @@
-export type Roles = "admin" | "user"
+export type Roles = "Admin" | "Editor" | "Viewer"
 
-export type StatusType = "active" | "inactive"
+export type StatusType = "Active" | "Inactive"
 
-export enum Permissions {
-  CREATE = "create",
-  READ = "read",
-  UPDATE = "update",
-  DELETE = "delete"
-}
+export type Permissions = string[]
 
 export interface UsersType {
+  uid:number;
   name: string,
   email: string,
   role: Roles,
-  permissions: Permissions,
   status: StatusType
+}
+
+export interface RoleType {
+  role: Roles,
+  permissions: Permissions
+}
+
+export interface PermissionsType {
+  permission: string,
+  description: string
 }

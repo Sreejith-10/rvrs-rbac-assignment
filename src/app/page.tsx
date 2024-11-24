@@ -1,81 +1,61 @@
-import { Button } from "@/components/button";
-import { Pill } from "@/components/pill";
-import { Dropdown } from "@/components/drop-down"
-import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell } from "@/components/table";
-import { Permissions, UsersType } from "@/types/types";
-import { EllipsisVertical, PlusCircle } from "lucide-react";
-
-const users = [
-  {
-    name: "sreejith",
-    email: "sreejith@gmail.com",
-    role: "admin",
-    permissions: Permissions.CREATE,
-    status: "active"
-  },
-  {
-    name: "vipin",
-    email: "vipin@gmail.com",
-    role: "user",
-    permissions: Permissions.UPDATE,
-    status: "inactive"
-  },
-  {
-    name: "sooraj",
-    email: "sooraj@gmail.com",
-    role: "admin",
-    permissions: Permissions.READ,
-    status: "active"
-  },
-
-] satisfies UsersType[]
+import {Activity, Key, Shield, UserPlus, Users} from "lucide-react";
 
 export default function Home() {
-  return (
-    <div className="w-full h-auto space-y-4">
-      <div className="w-full flex items-center justify-between">
-        <h1 className="font-semibold text-3xl">User Management</h1>
-        <Button>
-          <PlusCircle />
-          Add User
-        </Button>
-      </div>
-      <Table>
-        <TableHeader>
-          <TableRow>
-            <TableHead className="w-[100px]">Name</TableHead>
-            <TableHead>Email</TableHead>
-            <TableHead>Role</TableHead>
-            <TableHead className="text-center">Status</TableHead>
-            <TableHead>Actions</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {
-            users.map((user, index) => (
-              <TableRow key={index}>
-                <TableCell className="font-medium">{user.name}</TableCell>
-                <TableCell>{user.email}</TableCell>
-                <TableCell>{user.role}</TableCell>
-                <TableCell className="text-center">
-                  <Pill variant={user.status}>{user.status}</Pill>
-                </TableCell>
-                <TableCell className="relative">
-                  <Dropdown
-                    trigger={
-                      <EllipsisVertical className="cursor-pointer" />
-                    }
-                  >
-                    <div>Edit</div>
-                    <div>Delete</div>
-                  </Dropdown>
-                </TableCell>
-              </TableRow>
-
-            ))
-          }
-        </TableBody>
-      </Table>
-    </div>
-  )
+	return (
+		<div className="w-full space-y-6">
+			<h1 className="font-semibold text-4xl">Dashboard</h1>
+			<div className="flex flex-wrap gap-8">
+				<div className="w-[350px] bg-white px-10 py-9 rounded-md shadow-md space-y-6">
+					<div className="flex justify-between items-center">
+						<h1 className="font-semibold text-lg">Total Users</h1>
+						<Users />
+					</div>
+					<div>
+						<h2 className="font-semibold text-4xl">1,234</h2>
+						<p className="text-slate-500">+20% from last month</p>
+					</div>
+				</div>
+				<div className="w-[350px] bg-white px-10 py-9 rounded-md shadow-md space-y-6">
+					<div className="flex justify-between items-center">
+						<h1 className="font-semibold text-lg">Active Users</h1>
+						<Activity />
+					</div>
+					<div>
+						<h2 className="font-semibold text-4xl">1,24</h2>
+						<p className="text-slate-500">+5% from last month</p>
+					</div>
+				</div>{" "}
+				<div className="w-[350px] bg-white px-10 py-9 rounded-md shadow-md space-y-6">
+					<div className="flex justify-between items-center">
+						<h1 className="font-semibold text-lg">Total Roles</h1>
+						<UserPlus />
+					</div>
+					<div>
+						<h2 className="font-semibold text-4xl">13</h2>
+						<p className="text-slate-500">+2 new roles added</p>
+					</div>
+				</div>{" "}
+				<div className="w-[350px] bg-white px-10 py-9 rounded-md shadow-md space-y-6">
+					<div className="flex justify-between items-center">
+						<h1 className="font-semibold text-lg">Permissions</h1>
+						<Key />
+					</div>
+					<div>
+						<h2 className="font-semibold text-4xl">48</h2>
+						<p className="text-slate-500">+2 from last week</p>
+					</div>
+				</div>
+				<div className="w-[350px] bg-white px-10 py-9 rounded-md shadow-md space-y-6">
+					<div className="flex justify-between items-center">
+						<h1 className="font-semibold text-lg">Security Score</h1>
+						<Shield />
+					</div>
+					<div>
+						<h2 className="font-semibold text-4xl">89%</h2>
+						<p className="text-slate-500">+18% from last audit</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	);
 }
