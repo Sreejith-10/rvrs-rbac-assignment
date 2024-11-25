@@ -14,6 +14,7 @@ import {Dropdown} from "@/components/drop-down";
 import {PlusCircle, EllipsisVertical} from "lucide-react";
 import {useState} from "react";
 import {SearchBar} from "@/components/search-bar";
+import Link from "next/link";
 
 const permissions = [
 	{
@@ -47,8 +48,10 @@ export default function Permissions() {
 					onChange={(e) => setSearchTerm(e.target.value)}
 				/>
 				<Button>
-					<PlusCircle />
-					Add Permission
+					<Link className="flex items-center justify-between gap-3" href={"/permissions/create"}>
+						<PlusCircle />
+						Add Permission
+					</Link>
 				</Button>
 			</div>
 			<Table>

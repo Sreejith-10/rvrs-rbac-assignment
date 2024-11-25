@@ -4,7 +4,7 @@ import {create} from "zustand";
 type RolesStore = {
 	roles: RoleType[];
 	createRole: (data: RoleType) => void;
-	updateRole: (role: string) => void;
+	updateRole: (data: RoleType) => void;
 	deleteRole: (role: string) => void;
 };
 
@@ -15,6 +15,14 @@ export const useRolesStore = create<RolesStore>((set) => ({
 			roles: [...state.roles, data],
 		}));
 	},
-	updateRole: (role) => {},
-	deleteRole: (role) => {},
+	updateRole: (data) => {
+		set((state) => ({
+			roles: state.roles.map((item) => (item.role === data.role ? data : item)),
+		}));
+	},
+	deleteRole: (role) => {
+		set((state) => ({
+			roles: state.roles.filter((item) => item.role === role),
+		}));
+	},
 }));

@@ -4,8 +4,8 @@ import {Button} from "@/components/button";
 import {Input} from "@/components/input";
 import {Label} from "@/components/label";
 import {useToast} from "@/hooks/useToast";
-import {userSchema} from "@/schema/userSchema";
-import {useUsersStore} from "@/store/useUsersStore";
+import {roleSchema} from "@/schema/roleSchema";
+import {useRolesStore} from "@/store/useRolesStore";
 import {Roles} from "@/types/types";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {useRouter} from "next/navigation";
@@ -13,7 +13,7 @@ import {useForm} from "react-hook-form";
 import * as z from "zod";
 
 export default function CreateRole() {
-	const createUser = useUsersStore((state) => state.createUser);
+	const createUser = useRolesStore((state) => state.createRole);
 	const toast = useToast();
 	const router = useRouter();
 
@@ -21,20 +21,18 @@ export default function CreateRole() {
 		register,
 		handleSubmit,
 		formState: {errors, isSubmitting},
-	} = useForm<z.infer<typeof userSchema>>({
-		resolver: zodResolver(userSchema),
+	} = useForm<z.infer<typeof roleSchema>>({
+		resolver: zodResolver(roleSchema),
 		defaultValues: {
-			name: "",
-			email: "",
 			role: "",
+			permissions: [],
 		},
 	});
 
-	const submitHandler = (values: z.infer<typeof userSchema>) => {
+	const submitHandler = (values: z.infer<typeof roleSchema>) => {
 		createUser({
-			name: values.name,
-			email: values.email,
 			role: values.role as Roles,
+			permissions: values.permissions,
 		});
 
 		toast?.add({
@@ -54,8 +52,8 @@ export default function CreateRole() {
 				<div className="space-y-2">
 					<Label
 						htmlFor="name"
-						className={`${errors.name && "text-destructive"}`}>
-						Name
+						className={`${errors.role && "text-destructive"}`}>
+						Role
 					</Label>
 					<Input
 						{...register("name")}
