@@ -41,7 +41,7 @@ const Toast = ({content, close}: ToastProps) => {
 
 	return (
 		<div className={cn(toastVarients({variant: content.variant}))}>
-			<X onClick={close} className="absolute top-10 right-10 cursor-pointer" />
+			<X onClick={close} className="absolute top-3 right-3 cursor-pointer" />
 			<div>{icons[content.variant!]}</div>
 			<div>
 				<h1 className="font-semibold">{content.title}</h1>

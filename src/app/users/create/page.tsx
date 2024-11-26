@@ -3,17 +3,16 @@
 import {Button} from "@/components/button";
 import {Input} from "@/components/input";
 import {Label} from "@/components/label";
+import {Toggle} from "@/components/toggle";
+import {P} from "@/components/typography";
 import {useToast} from "@/hooks/useToast";
 import {userSchema} from "@/schema/userSchema";
-import {useUsersStore} from "@/store/useUsersStore";
-import {Roles} from "@/types/types";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {useRouter} from "next/navigation";
 import {useForm} from "react-hook-form";
 import * as z from "zod";
 
 export default function CreateUser() {
-	const createUser = useUsersStore((state) => state.createUser);
 	const toast = useToast();
 	const router = useRouter();
 
@@ -21,35 +20,64 @@ export default function CreateUser() {
 		register,
 		handleSubmit,
 		formState: {errors, isSubmitting},
+		setValue,
+		watch,
 	} = useForm<z.infer<typeof userSchema>>({
 		resolver: zodResolver(userSchema),
 		defaultValues: {
 			name: "",
 			email: "",
 			role: "",
+			status: "Active",
 		},
 	});
 
-	const submitHandler = (values: z.infer<typeof userSchema>) => {
-		createUser({
-			name: values.name,
-			email: values.email,
-			role: values.role as Roles,
-		});
+	const submitHandler = async (values: z.infer<typeof userSchema>) => {
+		try {
+			const response = await fetch("http://localhost:3005/users", {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify({
+					...values,
+					id: Date.now() + "",
+					status: "Active",
+				}),
+			});
 
-		toast?.add({
-			title: "success",
-			description: "User created",
-			duration: 3000,
-			variant: "success",
-		});
+			if (response.ok) {
+				toast?.add({
+					title: "success",
+					description: "user created succesfull",
+					duration: 2000,
+					variant: "success",
+				});
+			}
 
-		router.push("/users");
+			router.push("/users");
+		} catch (error) {
+			console.log(error);
+			toast?.add({
+				title: "Error",
+				description: "Failed to update user. Please try again.",
+				duration: 3000,
+				variant: "error",
+			});
+		}
+	};
+
+	const status = watch("status", "Active"); // Default to "Active"
+
+	const handleCheckboxChange = () => {
+		const newStatus = status === "Active" ? "Inactive" : "Active";
+		setValue("status", newStatus, {shouldDirty: true, shouldTouch: true});
 	};
 
 	return (
-		<div className="w-full h-auto bg-white rounded-md shadow-md p-8 space-y-4">
+		<div className="w-full h-auto bg-white rounded-md shadow-md p-8 space-y-4 ">
 			<h1 className="font-semibold text-3xl">Create new user</h1>
+
 			<form onSubmit={handleSubmit(submitHandler)} className="space-y-4">
 				<div className="space-y-2">
 					<Label
@@ -59,6 +87,7 @@ export default function CreateUser() {
 					</Label>
 					<Input
 						{...register("name")}
+						placeholder="User name"
 						type="text"
 						className={`${
 							errors.name &&
@@ -66,7 +95,7 @@ export default function CreateUser() {
 						}`}
 					/>
 					{errors.name && (
-						<p className="text-destructive text-sm">{errors.name.message}</p>
+						<P className="text-destructive text-sm">{errors.name.message}</P>
 					)}
 				</div>
 
@@ -79,13 +108,14 @@ export default function CreateUser() {
 					<Input
 						{...register("email")}
 						type="text"
+						placeholder="User email"
 						className={`${
 							errors.email &&
 							"border-destructive ring-offset-destructive placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-destructive focus-visible:ring-offset-1"
 						}`}
 					/>
 					{errors.email && (
-						<p className="text-destructive text-sm">{errors.email.message}</p>
+						<P className="text-destructive text-sm">{errors.email.message}</P>
 					)}
 				</div>
 
@@ -111,11 +141,30 @@ export default function CreateUser() {
 						<option value="Viewer">Viewer</option>
 					</select>
 					{errors.role && (
-						<p className="text-destructive text-sm">{errors.role.message}</p>
+						<P className="text-destructive text-sm">{errors.role.message}</P>
 					)}
 				</div>
 
-				<Button type="submit" loading={isSubmitting}>
+				<div className="flex flex-col space-y-2">
+					<Label
+						htmlFor="role"
+						className={`${errors.role && "text-destructive"}`}>
+						Status
+					</Label>
+					<div className="flex space-x-3 items-center">
+						<p className="font-semibold text-red-500">Inactive</p>
+						<Toggle
+							checked={status === "Active"} // Dynamically update based on the 'status' field
+							onChange={handleCheckboxChange}
+						/>
+						<p className="font-semibold text-emerald-500">Active</p>
+					</div>
+				</div>
+
+				<Button
+					type="submit"
+					loading={isSubmitting}
+					className="bg-purple-500 hover:bg-purple-400">
 					Submit
 				</Button>
 			</form>

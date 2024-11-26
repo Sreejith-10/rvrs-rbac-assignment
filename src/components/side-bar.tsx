@@ -1,44 +1,64 @@
 "use client";
 
-import {Key, Shield, UserPlus, Users} from "lucide-react";
+import {
+	Key,
+	Menu,
+	Shield,
+	UserPlus,
+	Users,
+	X,
+	type LucideIcon,
+} from "lucide-react";
 import Link from "next/link";
 import {usePathname} from "next/navigation";
+import {ReactNode, useState} from "react";
 
-export const SideBar = () => {
+interface SidebarProps {
+	isOpen: boolean;
+	toggleSidebar: () => void;
+}
+
+const menuItems = [
+	{icon: Shield, label: "Dashboard", href: "/"},
+	{icon: Users, label: "Users", href: "/users"},
+	{icon: UserPlus, label: "Roles", href: "/roles"},
+	{icon: Key, label: "Permissions", href: "/permissions"},
+];
+
+export const SideBar = ({isOpen, toggleSidebar}: SidebarProps) => {
 	const path = usePathname();
 
 	return (
-		<div className="w-[25%] h-full bg-white shadow-md">
-			<nav className="w-full h-full flex flex-col gap-2 p-5 rounded-md">
-				<h1 className="font-semibold text-4xl mb-5">RBAC Dashboard</h1>
-				<div
-					className={`${
-						path === "/" && "bg-slate-100"
-					} w-full h-fit p-3 rounded-md flex gap-3 font-semibold`}>
-					<Shield />
-					<Link href={"/"}>Dashboard</Link>
-				</div>
-				<div
-					className={`${
-						path === "/users" && "bg-slate-100"
-					} w-full h-fit p-3 rounded-md flex gap-3 font-semibold`}>
-					<Users />
-					<Link href={"/users"}>Users</Link>
-				</div>
-				<div
-					className={`${
-						path === "/roles" && "bg-slate-100"
-					} w-full h-fit p-3 rounded-md flex gap-3 font-semibold`}>
-					<UserPlus />
-					<Link href={"/roles"}>Roles</Link>
-				</div>
-				<div
-					className={`${
-						path === "/permissions" && "bg-slate-100"
-					} w-full h-fit p-3 rounded-md flex gap-3 font-semibold`}>
-					<Key />
-					<Link href={"/permissions"}>Permissions</Link>
-				</div>
+		<div
+			className={`fixed inset-y-0 left-0 z-50 w-64 bg-gradient-to-b from-purple-700 to-purple-900 text-white transform ${
+				isOpen ? "translate-x-0" : "-translate-x-full"
+			} transition-transform duration-300 ease-in-out lg:translate-x-0 lg:static lg:inset-0`}>
+			<div className="flex items-center justify-between h-16 px-4 bg-purple-800">
+				<h2 className="text-xl font-bold">RBAC</h2>
+				<button
+					onClick={toggleSidebar}
+					className="lg:hidden text-white hover:text-purple-200 transition-colors">
+					<Menu size={24} />
+					<span className="sr-only">Toggle Sidebar</span>
+				</button>
+			</div>
+			<nav className="px-4 py-4">
+				<ul className="space-y-2">
+					{menuItems.map((item) => (
+						<li key={item.href}>
+							<Link
+								href={item.href}
+								className={`flex items-center gap-3 rounded-lg px-3 py-2 transition-colors ${
+									path === item.href
+										? "bg-purple-600 text-white"
+										: "text-gray-300 hover:bg-purple-600 hover:text-white"
+								}`}>
+								<item.icon className="h-5 w-5" />
+								{item.label}
+							</Link>
+						</li>
+					))}
+				</ul>
 			</nav>
 		</div>
 	);

@@ -1,0 +1,131 @@
+{
+  "users": [
+    {
+      "id": "1698518400000",
+      "name": "Sreejith PP",
+      "email": "sreejith@gmail.com",
+      "role": "Manager",
+      "status": "Active"
+    },
+    {
+      "id": "1698604800000",
+      "name": "Ananya",
+      "email": "ananya@gmail.com",
+      "role": "Editor",
+      "status": "Active"
+    },
+    {
+      "id": "1698691200000",
+      "name": "Ravi",
+      "email": "ravi@gmail.com",
+      "role": "Viewer",
+      "status": "Inactive"
+    },
+    {
+      "id": "1698777600000",
+      "name": "Meera",
+      "email": "meera@gmail.com",
+      "role": "Manager",
+      "status": "Active"
+    },
+    {
+      "id": "1698864000000",
+      "name": "Kiran",
+      "email": "kiran@gmail.com",
+      "role": "Admin",
+      "status": "Inactive"
+    },
+    {
+      "id": "d7b8",
+      "name": "Vipin",
+      "email": "vipin@gmail.com",
+      "role": "Viewer",
+      "status": "Inactive"
+    },
+    {
+      "id": "db59",
+      "name": "moto edge 2",
+      "email": "admin1@gamil.com",
+      "role": "Editor",
+      "status": "Active"
+    }
+  ],
+  "roles": [
+    {
+      "id": "1698518400000",
+      "role": "Admin",
+      "permissions": [
+        "Create",
+        "Read",
+        "Update",
+        "Delete"
+      ]
+    },
+    {
+      "id": "1698604800000",
+      "role": "Editor",
+      "permissions": [
+        "Read",
+        "Update"
+      ]
+    },
+    {
+      "id": "1698691200000",
+      "role": "Viewer",
+      "permissions": [
+        "Read"
+      ]
+    },
+    {
+      "id": "1698777600000",
+      "role": "Manager",
+      "permissions": [
+        "Create",
+        "Read",
+        "Update"
+      ]
+    },
+    {
+      "id": "1732617855632",
+      "role": "Police",
+      "permissions": [
+        "Update"
+      ]
+    },
+    {
+      "id": "1732619035238",
+      "role": "Moderator",
+      "permissions": [
+        "Update",
+        "Read"
+      ]
+    }
+  ],
+  "permissions": [
+    {
+      "id": "1698518400000",
+      "permission": "Create",
+      "description": "Create users"
+    },
+    {
+      "id": "1698604800000",
+      "permission": "Read",
+      "description": "View user data"
+    },
+    {
+      "id": "1698691200000",
+      "permission": "Update",
+      "description": "Edit user data"
+    },
+    {
+      "id": "1698777600000",
+      "permission": "Delete",
+      "description": "Remove users"
+    },
+    {
+      "id": "1732618520999",
+      "permission": "Patch",
+      "description": "update specific fields of a document"
+    }
+  ]
+}

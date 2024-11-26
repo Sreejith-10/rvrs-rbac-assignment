@@ -1,6 +1,6 @@
 "use client";
 
-import {ReactNode, useMemo, useState} from "react";
+import {ReactNode, useEffect, useMemo, useState} from "react";
 import {ToastContext} from "./toast-context";
 import {createPortal} from "react-dom";
 import Toast from "../components/toast";
@@ -12,6 +12,11 @@ interface IToasts extends IToast {
 
 export const ToastProvider = ({children}: Readonly<{children: ReactNode}>) => {
 	const [toasts, setToasts] = useState<IToasts[]>([]);
+	const [mounted, setMounted] = useState(false);
+
+	useEffect(() => {
+		setMounted(true);
+	}, []);
 
 	const add = ({
 		title,
@@ -34,15 +39,16 @@ export const ToastProvider = ({children}: Readonly<{children: ReactNode}>) => {
 
 	return (
 		<ToastContext.Provider value={contextValue}>
+			{mounted &&
+				createPortal(
+					<div className="fixed top-5 left-5 space-y-2">
+						{toasts.map((t) => (
+							<Toast key={t.id} content={t} close={() => close(t.id)} />
+						))}
+					</div>,
+					document.body
+				)}
 			{children}
-			{createPortal(
-				<div className="fixed top-5 left-5 space-y-2">
-					{toasts.map((t) => (
-						<Toast key={t.id} content={t} close={() => close(t.id)} />
-					))}
-				</div>,
-				document.body
-			)}
 		</ToastContext.Provider>
 	);
 };

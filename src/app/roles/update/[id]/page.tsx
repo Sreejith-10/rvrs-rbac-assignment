@@ -6,21 +6,22 @@ import {Label} from "@/components/label";
 import {useFetch} from "@/hooks/useFetch";
 import {useToast} from "@/hooks/useToast";
 import {roleSchema} from "@/schema/roleSchema";
-import {PermissionsType} from "@/types/types";
+import {PermissionsType, RolesType} from "@/types/types";
 import {zodResolver} from "@hookform/resolvers/zod";
-import {useRouter} from "next/navigation";
+import {useParams, useRouter} from "next/navigation";
+import {useEffect} from "react";
 import {useForm} from "react-hook-form";
 import * as z from "zod";
 
 export default function CreateRole() {
+	const {id}: {id: string} = useParams();
 	const toast = useToast();
 	const router = useRouter();
 
-	const {data} = useFetch<PermissionsType[]>(
+	const {data} = useFetch<RolesType>("http://localhost:3005/roles/" + id);
+	const {data: permissions} = useFetch<PermissionsType[]>(
 		"http://localhost:3005/permissions"
 	);
-
-	console.log(data);
 
 	const {
 		register,
@@ -28,28 +29,42 @@ export default function CreateRole() {
 		formState: {errors, isSubmitting},
 		getValues,
 		setValue,
+		reset,
 	} = useForm<z.infer<typeof roleSchema>>({
 		resolver: zodResolver(roleSchema),
 		defaultValues: {
-			role: "",
-			permissions: [],
+			role: data?.role,
+			permissions: data?.permissions,
 		},
 	});
 
+	useEffect(() => {
+		// Reset form values when user is fetched
+		if (data) {
+			reset({
+				role: data.role,
+				permissions: data.permissions,
+			});
+		}
+	}, [data, reset]);
+
 	const submitHandler = async (values: z.infer<typeof roleSchema>) => {
 		try {
-			const response = await fetch("http://localhost:3005/roles", {
-				method: "POST",
-				headers: {
-					"Content-Type": "applications/json",
-				},
-				body: JSON.stringify({id: Date.now() + "", ...values}),
-			});
+			const response = await fetch(
+				"http://localhost:3005/permissions/" + data?.id,
+				{
+					method: "PATCH",
+					headers: {
+						"Content-Type": "applications/json",
+					},
+					body: JSON.stringify({id: Date.now(), ...values}),
+				}
+			);
 
 			if (response.ok)
 				toast?.add({
 					title: "Success",
-					description: "Role created",
+					description: "Role updated",
 				});
 
 			router.push("/roles");
@@ -57,7 +72,7 @@ export default function CreateRole() {
 			console.log(error);
 			toast?.add({
 				title: "Error",
-				description: "Failed to create role. Please try again.",
+				description: "Failed to update role. Please try again.",
 				duration: 3000,
 				variant: "error",
 			});
@@ -67,6 +82,8 @@ export default function CreateRole() {
 	const handleCheckboxChange = (permission: string, isChecked: boolean) => {
 		const currentPermissions = getValues("permissions");
 
+		if (currentPermissions.includes(permission)) return;
+
 		if (isChecked) {
 			setValue("permissions", [...currentPermissions, permission]);
 		} else {
@@ -75,11 +92,13 @@ export default function CreateRole() {
 				currentPermissions.filter((p) => p !== permission)
 			);
 		}
+
+		console.log(getValues("permissions"));
 	};
 
 	return (
 		<div className="w-full h-auto bg-white rounded-md shadow-md p-8 space-y-4">
-			<h1 className="font-semibold text-3xl">Create new user</h1>
+			<h1 className="font-semibold text-3xl">Update role</h1>
 			<form onSubmit={handleSubmit(submitHandler)} className="space-y-4">
 				<div className="space-y-2">
 					<Label
@@ -105,13 +124,14 @@ export default function CreateRole() {
 						Permission
 					</Label>
 					<div className="flex flex-wrap gap-4 items-start justify-start">
-						{data?.map((item, index) => (
+						{permissions?.map((item, index) => (
 							<div
 								key={index}
 								className="flex items-center justify-center gap-3">
 								<Input
 									type="checkbox"
 									id={`permission-${index}`}
+									checked={getValues("permissions")?.includes(item.permission)}
 									onChange={(e) =>
 										handleCheckboxChange(item.permission, e.target.checked)
 									}

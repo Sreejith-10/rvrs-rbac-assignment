@@ -4,6 +4,7 @@ import "./globals.css";
 import {ThemeProvider} from "@/providers/theme-provider";
 import {SideBar} from "@/components/side-bar";
 import {ToastProvider} from "@/context/toast-provider";
+import {Menu, MenuIcon} from "lucide-react";
 
 const geistSans = localFont({
 	src: "./fonts/GeistVF.woff",
@@ -35,12 +36,7 @@ export default function RootLayout({
 					defaultTheme="system"
 					enableSystem
 					disableTransitionOnChange>
-					<ToastProvider>
-						<main className="w-full h-dvh flex">
-							<SideBar />
-							<div className="w-[75%] p-8 bg-gray-100">{children}</div>
-						</main>
-					</ToastProvider>
+					<ToastProvider>{children}</ToastProvider>
 				</ThemeProvider>
 			</body>
 		</html>

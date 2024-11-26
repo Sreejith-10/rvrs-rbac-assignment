@@ -1,10 +1,10 @@
-import {RoleType} from "@/types/types";
+import {RolesType} from "@/types/types";
 import {create} from "zustand";
 
 type RolesStore = {
-	roles: RoleType[];
-	createRole: (data: RoleType) => void;
-	updateRole: (data: RoleType) => void;
+	roles: RolesType[];
+	createRole: (data: RolesType) => void;
+	updateRole: (data: RolesType) => void;
 	deleteRole: (role: string) => void;
 };
 

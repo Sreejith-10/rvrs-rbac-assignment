@@ -1,23 +1,23 @@
-export type Roles = "Admin" | "Editor" | "Viewer"
 
-export type StatusType = "Active" | "Inactive"
+export type StatusType = "Active" | "Inactive";
 
-export type Permissions = string[]
 
 export interface UsersType {
-  uid:number;
-  name: string,
-  email: string,
-  role: Roles,
-  status: StatusType
+	id: string;
+	name: string;
+	email: string;
+	role: string;
+	status: StatusType;
 }
 
-export interface RoleType {
-  role: Roles,
-  permissions: Permissions
+export interface RolesType {
+	id: string;
+	role: string;
+	permissions: string[];
 }
 
 export interface PermissionsType {
-  permission: string,
-  description: string
+	id: string;
+	permission: string;
+	description: string;
 }
