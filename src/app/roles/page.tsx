@@ -1,20 +1,14 @@
 "use client";
 
 import {Button} from "@/components/button";
+import {DataTable} from "@/components/data-table";
 import {Dropdown} from "@/components/drop-down";
 import {Loader} from "@/components/loader";
 import {Pill} from "@/components/pill";
 import {SearchBar} from "@/components/search-bar";
-import {
-	Table,
-	TableHeader,
-	TableRow,
-	TableHead,
-	TableBody,
-	TableCell,
-} from "@/components/table";
-import {H1, H3} from "@/components/typography";
+import {H1, H3, P} from "@/components/typography";
 import {useFetch} from "@/hooks/useFetch";
+import {Column} from "@/types/table";
 import {RolesType} from "@/types/types";
 import {
 	PlusCircle,
@@ -25,6 +19,43 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import {useState} from "react";
+
+const columns: Column<RolesType>[] = [
+	{header: "Role", key: "role", sortable: true},
+	{
+		header: "Permissions",
+		key: "permissions",
+		sortable: false,
+		render: (row) => (
+			<div className="flex flex-wrap gap-3">
+				{row.permissions.length > 0 ? (
+					row.permissions.map((item, key) => <Pill key={key}>{item}</Pill>)
+				) : (
+					<P>No Permissions</P>
+				)}
+			</div>
+		),
+	},
+	{
+		header: "Actions",
+		render: (row) => (
+			<Dropdown trigger={<EllipsisVertical className="cursor-pointer" />}>
+				<div>
+					<Link
+						href={"/roles/update/" + row.id}
+						className="flex items-center gap-2">
+						<Pencil className="size-4" />
+						Edit
+					</Link>
+				</div>
+				<div className="flex items-center gap-2">
+					<Trash className="size-4" />
+					Delete
+				</div>
+			</Dropdown>
+		),
+	},
+];
 
 export default function Roles() {
 	const [searchTerm, setSearchTerm] = useState("");
@@ -53,7 +84,7 @@ export default function Roles() {
 				</div>
 			) : (
 				<>
-					<div className="w-full flex items-center justify-between">
+					<div className="w-full flex items-center justify-between gap-5">
 						<SearchBar
 							placeholder="Search user"
 							value={searchTerm}
@@ -68,44 +99,7 @@ export default function Roles() {
 							</Link>
 						</Button>
 					</div>
-					<Table className="sm:overflow-x-scroll">
-						<TableHeader>
-							<TableRow>
-								<TableHead className="w-[100px]">Role</TableHead>
-								<TableHead>Permissions</TableHead>
-								<TableHead>Actions</TableHead>
-							</TableRow>
-						</TableHeader>
-						<TableBody>
-							{filteredRoles?.map((item, index) => (
-								<TableRow key={index}>
-									<TableCell className="font-semibold">{item.role}</TableCell>
-									<TableCell className="flex flex-wrap gap-3">
-										{item?.permissions?.map((item, index) => (
-											<Pill key={index}>{item}</Pill>
-										))}
-									</TableCell>
-									<TableCell className="">
-										<Dropdown
-											trigger={<EllipsisVertical className="cursor-pointer" />}>
-											<div>
-												<Link
-													href={"/roles/update/" + item.id}
-													className="flex items-center gap-2">
-													<Pencil className="size-4" />
-													Edit
-												</Link>
-											</div>
-											<div className="flex items-center gap-2">
-												<Trash className="size-4" />
-												Delete
-											</div>
-										</Dropdown>
-									</TableCell>
-								</TableRow>
-							))}
-						</TableBody>
-					</Table>
+					<DataTable columns={columns} data={filteredRoles!} />
 				</>
 			)}
 		</div>

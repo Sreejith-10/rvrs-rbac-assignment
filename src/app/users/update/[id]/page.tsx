@@ -41,7 +41,7 @@ export default function UpdateUser() {
 			name: "",
 			email: "",
 			role: "",
-			status: "Active", 
+			status: "Active",
 		},
 	});
 
@@ -51,7 +51,7 @@ export default function UpdateUser() {
 				name: user.name,
 				email: user.email,
 				role: user.role,
-				status: user.status, 
+				status: user.status,
 			});
 		}
 	}, [user, reset]);

@@ -1,36 +1,94 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Role Based Access Control Dashboard
 
-## Getting Started
+## Overview
 
-First, run the development server:
+This project is a web-based admin dashboard designed for managing users, roles, and permissions using Role-Based Access Control (RBAC). The dashboard allows administrators to view and manage users, assign roles to users, define and edit roles, and dynamically assign permissions to these roles. The interface is user-friendly, responsive, and secure, supporting various administrative operations such as CRUD (Create, Read, Update, Delete) for users and roles.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Features
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 1. **User Management**
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- View and manage users.
+- Add, edit, or delete users.
+- Assign roles to users and toggle their status (Active/Inactive).
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 2. **Role Management**
 
-## Learn More
+- Define and edit roles.
+- Include permissions (e.g., Read, Write, Delete) or custom attributes for roles.
+- Delete roles when no longer needed.
 
-To learn more about Next.js, take a look at the following resources:
+### 3. **Dynamic Permissions**
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- Assign or modify permissions for roles.
+- View and modify permissions dynamically with a clear and easy-to-use interface.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### 4. **Custom API Simulation**
 
-## Deploy on Vercel
+- Mock API calls for CRUD operations on users and roles.
+- Simulate server responses to validate functionality.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### 5. **Sorting & Searching**
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Sort users, roles, and permissions by key fields.
+- Search for users and roles by name or other attributes.
+
+### 6. **Notification & Toasts**
+
+- Show notifications to the admin for success, error, or information purposes (e.g., User added, Role updated).
+
+### 7. **Responsiveness**
+
+- The dashboard is fully responsive, providing a seamless experience across different screen sizes and devices.
+
+## Technology used
+
+- `Next Js` :- Next.js is a React framework for building server-side rendered (SSR) web applications. It simplifies routing, data fetching, and static site generation, offering great performance and developer experience out-of-the-box.
+
+- `TypeScript` :- TypeScript is a superset of JavaScript that adds static typing. It helps catch type-related errors at compile time and improves code maintainability with better autocompletion and documentation.
+
+- `Tailwind CSS` :- Tailwind CSS is a utility-first CSS framework that allows you to design custom user interfaces quickly by applying utility classes directly in your markup.
+- `React Hook Form` :- React Hook Form is a library for managing form state in React applications. It simplifies form validation and performance by minimizing re-renders.
+
+- `Zod` :- Zod is a TypeScript-first schema validation library. It provides a simple and declarative way to define data validation schemas and ensures type safety.
+- `JSON Server` :- JSON Server is a tool to set up a mock REST API with minimal effort. It serves JSON data from a simple file, making it useful for prototyping and testing.
+
+## Installation
+
+### Prerequisites
+
+Make sure you have the following installed:
+
+- [Node.js](https://nodejs.org/) (version 14 or later)
+- [npm](https://www.npmjs.com/) (Node Package Manager)
+
+### Steps to Install
+
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/Sreejith-10/rvrs-rbac-assignment
+   ```
+2. Navigate to the project
+   ```bash
+    cd rvrs-rbac-assignment
+   ```
+3. Install required packages
+   ```bash
+   npm install
+   ```
+4. Run the Next Js app
+   ```bash
+   npm run dev
+   ```
+5. Run the mock api server (on a different sever)
+   ```bash
+   npm run mock-api
+   ```
+
+# Acknowledgements
+
+- [Next.js](https://nextjs.org/)
+- [Tailwind CSS](https://tailwindcss.com/)
+- [React Hook Form](https://www.react-hook-form.com/)
+- [Zod](https://zod.dev/)
+- [JSON Server](https://www.npmjs.com/package/json-server)

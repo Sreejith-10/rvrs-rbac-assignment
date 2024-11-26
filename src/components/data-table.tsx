@@ -1,4 +1,4 @@
-import {useState} from "react";
+import {ReactNode, useState} from "react";
 import {
 	Table,
 	TableHeader,
@@ -8,19 +8,14 @@ import {
 	TableCell,
 } from "@/components/table";
 import {ArrowUpDown} from "lucide-react";
+import {Column} from "@/types/table";
 
-type Column<T> = {
-	header: string;
-	key: keyof T;
-	sortable?: boolean;
-};
-
-interface SortableTableProps<T> {
+interface DataTableProps<T> {
 	data: T[];
 	columns: Column<T>[];
 }
 
-function SortableTable<T>({data, columns}: SortableTableProps<T>) {
+export function DataTable<T>({data, columns}: DataTableProps<T>) {
 	const [sortConfig, setSortConfig] = useState<{
 		key: keyof T;
 		direction: "asc" | "desc";
@@ -60,11 +55,11 @@ function SortableTable<T>({data, columns}: SortableTableProps<T>) {
 					{columns.map((col, index) => (
 						<TableHead
 							key={index}
-							onClick={() => col.sortable && handleSort(col.key)}
-							className="cursor-pointer">
+							onClick={() => col.sortable && col.key && handleSort(col.key)}
+							className={col.sortable ? "cursor-pointer" : ""}>
 							<div className="flex items-center gap-1">
 								{col.header}
-								{col.sortable && (
+								{col.sortable && col.key && (
 									<span>
 										{sortConfig?.key === col.key ? (
 											sortConfig.direction === "asc" ? (
@@ -73,9 +68,7 @@ function SortableTable<T>({data, columns}: SortableTableProps<T>) {
 												<ArrowUpDown className="size-4" />
 											)
 										) : (
-											<>
-												<ArrowUpDown className="size-4" />
-											</>
+											<ArrowUpDown className="size-4" />
 										)}
 									</span>
 								)}
@@ -85,18 +78,26 @@ function SortableTable<T>({data, columns}: SortableTableProps<T>) {
 				</TableRow>
 			</TableHeader>
 			<TableBody>
-				{sortedAndFilteredData.map((row, index) => (
-					<TableRow key={index}>
-						{columns.map((col) => (
-							<TableCell key={col.key as string}>
-								{row[col.key] as string}
-							</TableCell>
-						))}
+				{sortedAndFilteredData?.length > 0 ? (
+					sortedAndFilteredData?.map((row, rowIndex) => (
+						<TableRow key={rowIndex}>
+							{columns.map((col, colIndex) => (
+								<TableCell key={colIndex}>
+									{col.render
+										? col.render(row)
+										: (row[col.key as keyof T] as ReactNode)}
+								</TableCell>
+							))}
+						</TableRow>
+					))
+				) : (
+					<TableRow>
+						<TableCell colSpan={columns.length}>
+							<div className="font-normal p-2">No items found</div>
+						</TableCell>
 					</TableRow>
-				))}
+				)}
 			</TableBody>
 		</Table>
 	);
 }
-
-export default SortableTable;

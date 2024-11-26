@@ -1,14 +1,6 @@
 "use client";
 
 import {PermissionsType} from "@/types/types";
-import {
-	Table,
-	TableBody,
-	TableCell,
-	TableHead,
-	TableHeader,
-	TableRow,
-} from "@/components/table";
 import {Button} from "@/components/button";
 import {Dropdown} from "@/components/drop-down";
 import {
@@ -24,6 +16,36 @@ import Link from "next/link";
 import {useFetch} from "@/hooks/useFetch";
 import {H1, H3} from "@/components/typography";
 import {Loader} from "@/components/loader";
+import {Column} from "@/types/table";
+import {DataTable} from "@/components/data-table";
+
+const columns: Column<PermissionsType>[] = [
+	{header: "Permission", key: "permission", sortable: true},
+	{
+		header: "Description",
+		key: "description",
+		sortable: false,
+	},
+	{
+		header: "Actions",
+		render: (row) => (
+			<Dropdown trigger={<EllipsisVertical className="cursor-pointer" />}>
+				<div>
+					<Link
+						href={"/permissions/update/" + row.id}
+						className="flex items-center gap-2">
+						<Pencil className="size-4" />
+						Edit
+					</Link>
+				</div>
+				<div className="flex items-center gap-2">
+					<Trash className="size-4" />
+					Delete
+				</div>
+			</Dropdown>
+		),
+	},
+];
 
 export default function Permissions() {
 	const [searchTerm, setSearchTerm] = useState("");
@@ -51,7 +73,7 @@ export default function Permissions() {
 				</div>
 			) : (
 				<>
-					<div className="w-full flex items-center justify-between">
+					<div className="w-full flex items-center justify-between gap-5">
 						<SearchBar
 							placeholder="Search permission"
 							value={searchTerm}
@@ -66,42 +88,7 @@ export default function Permissions() {
 							</Link>
 						</Button>
 					</div>
-					<Table className="sm:overflow-x-scroll">
-						<TableHeader>
-							<TableRow>
-								<TableHead className="w-[100px]">Role</TableHead>
-								<TableHead>Permissions</TableHead>
-								<TableHead>Actions</TableHead>
-							</TableRow>
-						</TableHeader>
-						<TableBody>
-							{filterdPermissions?.map((item, index) => (
-								<TableRow key={index}>
-									<TableCell className="font-semibold">
-										{item.permission}
-									</TableCell>
-									<TableCell>{item.description}</TableCell>
-									<TableCell className="">
-										<Dropdown
-											trigger={<EllipsisVertical className="cursor-pointer" />}>
-											<div>
-												<Link
-													href={"/permissions/update/" + item.id}
-													className="flex items-center gap-2">
-													<Pencil className="size-4" />
-													Edit
-												</Link>
-											</div>
-											<div className="flex items-center gap-2">
-												<Trash className="size-4" />
-												Delete
-											</div>
-										</Dropdown>
-									</TableCell>
-								</TableRow>
-							))}
-						</TableBody>
-					</Table>
+					<DataTable columns={columns} data={filterdPermissions!} />
 				</>
 			)}
 		</div>

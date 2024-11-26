@@ -1,16 +1,6 @@
 "use client";
 
 import {Button} from "@/components/button";
-import {Pill} from "@/components/pill";
-import {Dropdown} from "@/components/drop-down";
-import {
-	Table,
-	TableHeader,
-	TableRow,
-	TableHead,
-	TableBody,
-	TableCell,
-} from "@/components/table";
 import {
 	AlertTriangle,
 	EllipsisVertical,
@@ -25,14 +15,34 @@ import {useFetch} from "@/hooks/useFetch";
 import {UsersType} from "@/types/types";
 import {Loader} from "@/components/loader";
 import {H1, H3} from "@/components/typography";
-import {Dialog} from "@/components/dialog";
-import DataTable from "@/components/data-table";
+import {Dropdown} from "@/components/drop-down";
+import {Column} from "@/types/table";
+import {DataTable} from "@/components/data-table";
 
-const columns = [
+const columns: Column<UsersType>[] = [
 	{header: "Name", key: "name", sortable: true},
 	{header: "Email", key: "email", sortable: true},
 	{header: "Role", key: "role", sortable: true},
 	{header: "Status", key: "status", sortable: true},
+	{
+		header: "Actions",
+		render: (row) => (
+			<Dropdown trigger={<EllipsisVertical className="cursor-pointer" />}>
+				<div>
+					<Link
+						href={"/users/update/" + row.id}
+						className="flex items-center gap-2">
+						<Pencil className="size-4" />
+						Edit
+					</Link>
+				</div>
+				<div className="flex items-center gap-2">
+					<Trash className="size-4" />
+					Delete
+				</div>
+			</Dropdown>
+		),
+	},
 ];
 
 export default function Users() {
@@ -80,59 +90,6 @@ export default function Users() {
 						</Button>
 					</div>
 					<DataTable columns={columns} data={filteredUsers!} />
-					{/* <Table className="sm:overflow-x-scroll">
-						<TableHeader>
-							<TableRow>
-								<TableHead className="w-[100px]">Name</TableHead>
-								<TableHead>Email</TableHead>
-								<TableHead>Role</TableHead>
-								<TableHead className="text-center">Status</TableHead>
-								<TableHead>Actions</TableHead>
-							</TableRow>
-						</TableHeader>
-						<TableBody>
-							{filteredUsers?.map((user, index) => (
-								<TableRow key={index}>
-									<TableCell className="font-medium">{user.name}</TableCell>
-									<TableCell>{user.email}</TableCell>
-									<TableCell>{user.role}</TableCell>
-									<TableCell className="grid place-content-center">
-										<Pill variant={user.status}>{user.status}</Pill>
-									</TableCell>
-									<TableCell className="">
-										<Dropdown
-											trigger={<EllipsisVertical className="cursor-pointer" />}>
-											<div className="">
-												<Link
-													href={"/users/update/" + user.id}
-													className="flex items-center gap-2">
-													<Pencil className="size-4" />
-													Edit
-												</Link>
-											</div>
-											<Dialog
-												trigger={
-													<button className="bg-blue-500 text-white px-4 py-2 rounded">
-														Open Dialog
-													</button>
-												}
-												className="backdrop:bg-gray-800/50">
-												<h2 className="text-xl font-bold mb-4">
-													Hello from Dialog
-												</h2>
-												<p className="mb-4">
-													This is a reusable dialog component.
-												</p>
-												<button className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600">
-													Confirm
-												</button>
-											</Dialog>
-										</Dropdown>
-									</TableCell>
-								</TableRow>
-							))}
-						</TableBody>
-					</Table> */}
 				</>
 			)}
 		</div>
