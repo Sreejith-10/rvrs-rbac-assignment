@@ -1,17 +1,8 @@
 "use client";
 
-import {
-	Key,
-	Menu,
-	Shield,
-	UserPlus,
-	Users,
-	X,
-	type LucideIcon,
-} from "lucide-react";
+import {Key, Menu, Shield, UserPlus, Users} from "lucide-react";
 import Link from "next/link";
 import {usePathname} from "next/navigation";
-import {ReactNode, useState} from "react";
 
 interface SidebarProps {
 	isOpen: boolean;

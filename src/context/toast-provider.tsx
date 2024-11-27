@@ -41,7 +41,14 @@ export const ToastProvider = ({children}: Readonly<{children: ReactNode}>) => {
 		<ToastContext.Provider value={contextValue}>
 			{mounted &&
 				createPortal(
-					<div className="fixed top-5 left-5 space-y-2">
+					<div
+						style={{
+							position: "fixed",
+							top: 10,
+							right: "10%",
+							marginBottom: 10,
+							zIndex: 9999999,
+						}}>
 						{toasts.map((t) => (
 							<Toast key={t.id} content={t} close={() => close(t.id)} />
 						))}

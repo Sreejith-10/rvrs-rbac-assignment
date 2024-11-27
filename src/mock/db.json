@@ -1,51 +1,51 @@
 {
   "users": [
     {
-      "id": "1698518400000",
-      "name": "Sreejith PP",
-      "email": "sreejith@gmail.com",
-      "role": "Manager",
-      "status": "Active"
-    },
-    {
-      "id": "1698604800000",
-      "name": "Ananya",
-      "email": "ananya@gmail.com",
+      "id": "1732666034285",
+      "name": "Vipin",
+      "email": "vipin1@gmail.com",
       "role": "Editor",
       "status": "Active"
     },
     {
-      "id": "1698691200000",
-      "name": "Ravi",
-      "email": "ravi@gmail.com",
-      "role": "Viewer",
-      "status": "Inactive"
-    },
-    {
-      "id": "1698777600000",
-      "name": "Meera",
-      "email": "meera@gmail.com",
-      "role": "Manager",
+      "id": "1732666370142",
+      "name": "Sooraj",
+      "email": "sooraj@gmail.com",
+      "role": "Admin",
       "status": "Active"
     },
     {
-      "id": "1698864000000",
-      "name": "Kiran",
-      "email": "kiran@gmail.com",
-      "role": "Admin",
-      "status": "Inactive"
-    },
-    {
-      "id": "d7b8",
-      "name": "Vipin",
-      "email": "vipin@gmail.com",
+      "id": "1732666410881",
+      "name": "Randy",
+      "email": "randy@gmail.com",
       "role": "Viewer",
-      "status": "Inactive"
+      "status": "Active"
     },
     {
-      "id": "db59",
-      "name": "moto edge 2",
+      "id": "1732666461859",
+      "name": "Roman",
+      "email": "roman@gmail.com",
+      "role": "Admin",
+      "status": "Active"
+    },
+    {
+      "id": "1732666656519",
+      "name": "sreejith",
+      "email": "harper@gmail.com",
+      "role": "Editor",
+      "status": "Active"
+    },
+    {
+      "id": "1732666754762",
+      "name": "Sooraj",
       "email": "admin1@gamil.com",
+      "role": "Admin",
+      "status": "Active"
+    },
+    {
+      "id": "1732666808732",
+      "name": "moto edge 2",
+      "email": "sreejith@gamil.com",
       "role": "Editor",
       "status": "Active"
     }
@@ -86,13 +86,6 @@
       ]
     },
     {
-      "id": "1732617855632",
-      "role": "Police",
-      "permissions": [
-        "Update"
-      ]
-    },
-    {
       "id": "1732619035238",
       "role": "Moderator",
       "permissions": [
@@ -121,11 +114,6 @@
       "id": "1698777600000",
       "permission": "Delete",
       "description": "Remove users"
-    },
-    {
-      "id": "1732618520999",
-      "permission": "Patch",
-      "description": "update specific fields of a document"
     }
   ]
 }

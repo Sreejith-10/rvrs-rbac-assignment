@@ -18,35 +18,12 @@ import {H1, H3} from "@/components/typography";
 import {Dropdown} from "@/components/drop-down";
 import {Column} from "@/types/table";
 import {DataTable} from "@/components/data-table";
-
-const columns: Column<UsersType>[] = [
-	{header: "Name", key: "name", sortable: true},
-	{header: "Email", key: "email", sortable: true},
-	{header: "Role", key: "role", sortable: true},
-	{header: "Status", key: "status", sortable: true},
-	{
-		header: "Actions",
-		render: (row) => (
-			<Dropdown trigger={<EllipsisVertical className="cursor-pointer" />}>
-				<div>
-					<Link
-						href={"/users/update/" + row.id}
-						className="flex items-center gap-2">
-						<Pencil className="size-4" />
-						Edit
-					</Link>
-				</div>
-				<div className="flex items-center gap-2">
-					<Trash className="size-4" />
-					Delete
-				</div>
-			</Dropdown>
-		),
-	},
-];
+import {Dialog, DialogContent, DialogTrigger} from "@/components/dialog";
+import {useToast} from "@/hooks/useToast";
 
 export default function Users() {
 	const [searchTerm, setSearchTerm] = useState("");
+	const toast = useToast();
 
 	const {data, isLoading, isError, refetch} = useFetch<UsersType[]>(
 		"http://localhost:3005/users"
@@ -58,6 +35,70 @@ export default function Users() {
 			user.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
 			user.role.toLowerCase().includes(searchTerm.toLowerCase())
 	);
+
+	const removeUser = async (id: string) => {
+		try {
+			const response = await fetch("http://localhost:3005/users/" + id, {
+				method: "DELETE",
+			});
+			if (response.ok) {
+				toast?.add({
+					title: "Success",
+					description: "User removed successfully",
+					duration: 3000,
+				});
+			}
+			refetch();
+		} catch (error) {
+			console.log(error);
+			toast?.add({
+				title: "Error",
+				description: "Failed to remove user. Please try again.",
+				duration: 3000,
+				variant: "error",
+			});
+		}
+	};
+
+	const columns: Column<UsersType>[] = [
+		{header: "Name", key: "name", sortable: true},
+		{header: "Email", key: "email", sortable: true},
+		{header: "Role", key: "role", sortable: true},
+		{header: "Status", key: "status", sortable: true},
+		{
+			header: "Actions",
+			render: (row) => (
+				<Dropdown trigger={<EllipsisVertical className="cursor-pointer" />}>
+					<div>
+						<Link
+							href={"/users/update/" + row.id}
+							className="flex items-center gap-2">
+							<Pencil className="size-4" />
+							Edit
+						</Link>
+					</div>
+					<Dialog>
+						<DialogTrigger>
+							<div className="flex items-center gap-2">
+								<Trash className="size-4" />
+								Delete
+							</div>
+						</DialogTrigger>
+						<DialogContent>
+							<div className="flex flex-col items-center gap-3">
+								<H3>Delete this user</H3>
+								<Button
+									className="bg-destructive hover:bg-red-400"
+									onClick={() => removeUser(row.id)}>
+									Confirm
+								</Button>
+							</div>
+						</DialogContent>
+					</Dialog>
+				</Dropdown>
+			),
+		},
+	];
 
 	return (
 		<div className="w-full h-auto space-y-4">

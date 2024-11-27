@@ -1,42 +1,58 @@
-"use client";
-
-import React, {useRef} from "react";
+import {X} from "lucide-react";
+import React, {useState} from "react";
+import ReactDOM from "react-dom";
 
 interface DialogProps {
-	trigger: React.ReactNode;
-	children: React.ReactNode;
-	className?: string;
+	children: React.ReactNode[];
 }
 
-export function Dialog({trigger, children}: DialogProps) {
-	const dialogRef = useRef<HTMLDialogElement>(null);
+interface DialogTriggerProps {
+	children: React.ReactNode;
+	onClick?: () => void;
+}
+
+interface DialogContentProps {
+	children: React.ReactNode;
+}
+
+const Dialog: React.FC<DialogProps> = ({children}) => {
+	const [isOpen, setIsOpen] = useState(false);
+
+	const handleOpen = () => {
+		setIsOpen(true);
+	};
+
+	const handleClose = () => {
+		setIsOpen(false);
+	};
 
 	return (
-		<div>
-			{/* Trigger Element */}
-			<div
-				onClick={() => dialogRef.current?.showModal()}
-				className="cursor-pointer inline-block">
-				{trigger}
-			</div>
-
-			{/* Dialog Element */}
-			<dialog
-				role="dialog"
-				aria-modal="false"
-				ref={dialogRef}
-				// className={`p-6 bg-white rounded-lg shadow-lg max-w-md w-full overflow-hidden ${className}`}
-				onClose={() => dialogRef.current?.close()}>
-				<div className="overflow-y-auto">{children}</div>
-
-				{/* Close Button */}
-				<button
-					className="mt-4 px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
-					onClick={() => dialogRef.current?.close()} // Close the dialog when clicked
-				>
-					Close
-				</button>
-			</dialog>
-		</div>
+		<>
+			<DialogTrigger onClick={handleOpen}>{children[0]}</DialogTrigger>
+			{isOpen &&
+				ReactDOM.createPortal(
+					<div className="absolute top-0 left-0 w-dvw h-full bg-black/80 z-50 flex items-center justify-center">
+						<div className="bg-white p-10 rounded-md shadow-md relative">
+							{children[1]}
+							<div
+								className="absolute top-2 right-2 border border-slate-400 rounded-md cursor-pointer"
+								onClick={handleClose}>
+								<X className="text-slate-700" />
+							</div>
+						</div>
+					</div>,
+					document.body
+				)}
+		</>
 	);
-}
+};
+
+const DialogTrigger: React.FC<DialogTriggerProps> = ({children, onClick}) => {
+	return <button onClick={onClick}>{children}</button>;
+};
+
+const DialogContent: React.FC<DialogContentProps> = ({children}) => {
+	return <div>{children}</div>;
+};
+
+export {Dialog, DialogTrigger, DialogContent};

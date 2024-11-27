@@ -14,7 +14,7 @@ interface ToastProps {
 }
 
 const toastVarients = cva(
-	"w-[220px] h-fit px-4 py-4 relative left-[80vw] z-[99999999] flex items-center gap-5 rounded-md",
+	"w-[220px] h-fit px-4 py-4 left-[80vw] z-[99999999] flex items-center gap-5 rounded-md",
 	{
 		variants: {
 			variant: {

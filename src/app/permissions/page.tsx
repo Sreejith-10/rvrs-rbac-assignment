@@ -18,37 +18,12 @@ import {H1, H3} from "@/components/typography";
 import {Loader} from "@/components/loader";
 import {Column} from "@/types/table";
 import {DataTable} from "@/components/data-table";
-
-const columns: Column<PermissionsType>[] = [
-	{header: "Permission", key: "permission", sortable: true},
-	{
-		header: "Description",
-		key: "description",
-		sortable: false,
-	},
-	{
-		header: "Actions",
-		render: (row) => (
-			<Dropdown trigger={<EllipsisVertical className="cursor-pointer" />}>
-				<div>
-					<Link
-						href={"/permissions/update/" + row.id}
-						className="flex items-center gap-2">
-						<Pencil className="size-4" />
-						Edit
-					</Link>
-				</div>
-				<div className="flex items-center gap-2">
-					<Trash className="size-4" />
-					Delete
-				</div>
-			</Dropdown>
-		),
-	},
-];
+import {Dialog, DialogContent, DialogTrigger} from "@/components/dialog";
+import {useToast} from "@/hooks/useToast";
 
 export default function Permissions() {
 	const [searchTerm, setSearchTerm] = useState("");
+	const toast = useToast();
 
 	const {data, isLoading, isError, refetch} = useFetch<PermissionsType[]>(
 		"http://localhost:3005/permissions"
@@ -57,6 +32,72 @@ export default function Permissions() {
 	const filterdPermissions = data?.filter((item) =>
 		item.permission.toLowerCase().includes(searchTerm.toLowerCase())
 	);
+
+	const removePermission = async (id: string) => {
+		try {
+			const response = await fetch("http://localhost:3005/permissions/" + id, {
+				method: "DELETE",
+			});
+			if (response.ok) {
+				toast?.add({
+					title: "Success",
+					description: "Permission removed successfully",
+					duration: 3000,
+				});
+			}
+			refetch();
+		} catch (error) {
+			console.log(error);
+			toast?.add({
+				title: "Error",
+				description: "Failed to remove permission. Please try again.",
+				duration: 3000,
+				variant: "error",
+			});
+		}
+	};
+
+	const columns: Column<PermissionsType>[] = [
+		{header: "Permission", key: "permission", sortable: true},
+		{
+			header: "Description",
+			key: "description",
+			sortable: false,
+		},
+		{
+			header: "Actions",
+			render: (row) => (
+				<Dropdown trigger={<EllipsisVertical className="cursor-pointer" />}>
+					<div>
+						<Link
+							href={"/permissions/update/" + row.id}
+							className="flex items-center gap-2">
+							<Pencil className="size-4" />
+							Edit
+						</Link>
+					</div>
+					<Dialog>
+						<DialogTrigger>
+							<div className="flex items-center gap-2">
+								<Trash className="size-4" />
+								Delete
+							</div>
+						</DialogTrigger>
+						<DialogContent>
+							<div className="flex flex-col items-center gap-3">
+								<H3>Delete this permission</H3>
+								<Button
+									className="bg-destructive hover:bg-red-400"
+									onClick={() => removePermission(row.id)}>
+									Confirm
+								</Button>
+							</div>
+						</DialogContent>
+					</Dialog>
+				</Dropdown>
+			),
+		},
+	];
 
 	return (
 		<div className="w-full h-auto space-y-4">

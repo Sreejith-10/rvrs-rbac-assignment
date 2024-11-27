@@ -41,16 +41,18 @@ export default function CreateUser() {
 				},
 				body: JSON.stringify({
 					...values,
-					id: Date.now() + "",
+					id: Date.now().toString(),
 					status: "Active",
 				}),
 			});
+
+			console.log(response);
 
 			if (response.ok) {
 				toast?.add({
 					title: "success",
 					description: "user created succesfull",
-					duration: 2000,
+					duration: 200000000,
 					variant: "success",
 				});
 			}
