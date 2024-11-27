@@ -17,7 +17,7 @@ export const SearchBar = forwardRef<HTMLInputElement, SearchBarProps>(
 		return (
 			<div className="relative w-full max-w-sm">
 				<Search className={cn(searchbarVariants({className}))} />
-				<Input type="text" className="pl-8 w-full" ref={ref} {...props} />
+				<Input type="text" className="pl-8 w-full dark:bg-gray-900" ref={ref} {...props} />
 			</div>
 		);
 	}

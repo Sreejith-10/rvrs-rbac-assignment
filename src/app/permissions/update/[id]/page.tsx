@@ -78,7 +78,7 @@ export default function UpdatePermission() {
 	};
 
 	return (
-		<div className="w-full h-auto bg-white rounded-md shadow-md p-8 space-y-4">
+		<div className="w-full h-auto bg-gray-50 dark:bg-gray-900 rounded-md shadow-md p-8 space-y-4">
 			<h1 className="font-semibold text-3xl">Update Permission</h1>
 			<form onSubmit={handleSubmit(submitHandler)} className="space-y-4">
 				<div className="space-y-2">
@@ -123,7 +123,7 @@ export default function UpdatePermission() {
 					)}
 				</div>
 
-				<Button type="submit" loading={isSubmitting}>
+				<Button className="bg-purple-500 text-gray-50" type="submit" loading={isSubmitting}>
 					Submit
 				</Button>
 			</form>

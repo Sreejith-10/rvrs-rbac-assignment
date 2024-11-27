@@ -80,6 +80,9 @@ Make sure you have the following installed:
    ```bash
    npm run dev
    ```
+
+- App will be running on [http://localhost:3000](http://localhost:3000)
+
 5. Run the mock api server (on a different sever)
    ```bash
    npm run mock-api

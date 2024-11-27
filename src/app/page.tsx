@@ -7,7 +7,7 @@ export default function Home() {
 			<div className="w-full space-y-6">
 				<h1 className="font-semibold text-4xl">Dashboard</h1>
 				<div className="flex flex-wrap gap-8">
-					<div className="md:w-[350px] w-full bg-white px-10 py-9 rounded-md shadow-md space-y-6">
+					<div className="md:w-[350px] w-full bg-white dark:bg-gray-800 px-10 py-9 rounded-md shadow-md space-y-6">
 						<div className="flex justify-between items-center">
 							<h1 className="font-semibold text-lg">Total Users</h1>
 							<Users className="text-purple-500" />
@@ -17,7 +17,7 @@ export default function Home() {
 							<p className="text-slate-500">+20% from last month</p>
 						</div>
 					</div>
-					<div className="md:w-[350px] w-full bg-white px-10 py-9 rounded-md shadow-md space-y-6">
+					<div className="md:w-[350px] w-full bg-white dark:bg-gray-800 px-10 py-9 rounded-md shadow-md space-y-6">
 						<div className="flex justify-between items-center">
 							<h1 className="font-semibold text-lg">Active Users</h1>
 							<Activity className="text-purple-500" />
@@ -27,7 +27,7 @@ export default function Home() {
 							<p className="text-slate-500">+5% from last month</p>
 						</div>
 					</div>
-					<div className="md:w-[350px] w-full bg-white px-10 py-9 rounded-md shadow-md space-y-6">
+					<div className="md:w-[350px] w-full bg-white dark:bg-gray-800 px-10 py-9 rounded-md shadow-md space-y-6">
 						<div className="flex justify-between items-center">
 							<h1 className="font-semibold text-lg">Total Roles</h1>
 							<UserPlus className="text-purple-500" />
@@ -37,7 +37,7 @@ export default function Home() {
 							<p className="text-slate-500">+2 new roles added</p>
 						</div>
 					</div>{" "}
-					<div className="md:w-[350px] w-full bg-white px-10 py-9 rounded-md shadow-md space-y-6">
+					<div className="md:w-[350px] w-full bg-white dark:bg-gray-800 px-10 py-9 rounded-md shadow-md space-y-6">
 						<div className="flex justify-between items-center">
 							<h1 className="font-semibold text-lg">Permissions</h1>
 							<Key className="text-purple-500" />
@@ -47,7 +47,7 @@ export default function Home() {
 							<p className="text-slate-500">+2 from last week</p>
 						</div>
 					</div>
-					<div className="md:w-[350px] w-full bg-white px-10 py-9 rounded-md shadow-md space-y-6">
+					<div className="md:w-[350px] w-full bg-white dark:bg-gray-800 px-10 py-9 rounded-md shadow-md space-y-6">
 						<div className="flex justify-between items-center">
 							<h1 className="font-semibold text-lg">Security Score</h1>
 							<Shield className="text-purple-500" />

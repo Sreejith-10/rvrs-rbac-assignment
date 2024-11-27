@@ -133,7 +133,7 @@ export default function Roles() {
 						<Button className="bg-purple-500 hover:bg-purple-400">
 							<Link
 								href={"/roles/create"}
-								className="flex gap-3 items-center justify-center">
+								className="flex gap-3 items-center justify-center text-gray-50">
 								<PlusCircle />
 								Add Role
 							</Link>

@@ -9,6 +9,7 @@ interface DropdownProps {
 
 export const Dropdown: React.FC<DropdownProps> = ({trigger, children}) => {
 	const dropdownRef = useRef<HTMLDivElement>(null); // Reference to the dropdown container
+	const triggerRef = useRef<HTMLDivElement>(null);
 
 	const handleToggle = (event: React.MouseEvent<HTMLDivElement>) => {
 		const dropdown = event.currentTarget.querySelector(
@@ -42,20 +43,27 @@ export const Dropdown: React.FC<DropdownProps> = ({trigger, children}) => {
 		};
 	}, []);
 
+	console.log(triggerRef.current?.getBoundingClientRect(), "h");
+
 	return (
 		<div
 			className="inline-block"
 			onClick={handleToggle}
 			data-dropdown-container
 			ref={dropdownRef}>
-			{/* Trigger Element */}
-			<div className="cursor-pointer" tabIndex={0} data-dropdown-trigger>
+			<div
+				className="cursor-pointer"
+				ref={triggerRef}
+				tabIndex={0}
+				data-dropdown-trigger>
 				{trigger}
 			</div>
-
-			{/* Dropdown Content */}
+			{/* md:right-36 right-2 */}
 			<div
-				className="absolute z-10 md:right-36 right-2 hidden w-fit px-4 py-2 space-y-2 mt-2 bg-white border border-gray-200 rounded-md shadow-lg cursor-pointer"
+				className={`absolute md:top-[${
+					triggerRef?.current?.getBoundingClientRect() &&
+					triggerRef?.current?.getBoundingClientRect().top + 20
+				}px] md:right-auto right-20 z-10 hidden w-fit px-4 py-2 space-y-2 mt-2 bg-gray-50 dark:bg-gray-800 border border-gray-200 rounded-md shadow-lg cursor-pointer`}
 				data-dropdown-content
 				data-visible="false">
 				{children}

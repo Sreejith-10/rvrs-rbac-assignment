@@ -33,7 +33,7 @@
       "name": "sreejith",
       "email": "harper@gmail.com",
       "role": "Editor",
-      "status": "Active"
+      "status": "Inactive"
     },
     {
       "id": "1732666754762",
@@ -47,6 +47,13 @@
       "name": "moto edge 2",
       "email": "sreejith@gamil.com",
       "role": "Editor",
+      "status": "Active"
+    },
+    {
+      "id": "1732709522878",
+      "name": "moto edge 2",
+      "email": "hacker@gmail.com",
+      "role": "Admin",
       "status": "Active"
     }
   ],

@@ -96,7 +96,7 @@ export default function UpdateUser() {
 	};
 
 	return (
-		<div className="w-full h-auto bg-white rounded-md shadow-md p-8 space-y-4">
+		<div className="w-full h-auto bg-gray-50 bg-gray-900 rounded-md shadow-md p-8 space-y-4">
 			<h1 className="font-semibold text-3xl">Update user</h1>
 			{isLoading ? (
 				<Loader />
@@ -152,7 +152,7 @@ export default function UpdateUser() {
 							<select
 								{...register("role")}
 								defaultValue={getValues("role")}
-								className={`flex h-10 w-full rounded-md border  bg-background px-3 py-2 text-base file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none  focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm ${
+								className={`flex h-10 w-full rounded-md border bg-background dark:bg-gray-800 px-3 py-2 text-base file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none  focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm ${
 									errors.role
 										? "border-destructive ring-offset-destructive placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-destructive focus-visible:ring-offset-1"
 										: "border-input ring-offset-background focus-visible:ring-2 focus-visible:ring-ring"
@@ -188,7 +188,7 @@ export default function UpdateUser() {
 						</div>
 					</div>
 
-					<Button type="submit" loading={isSubmitting}>
+					<Button className="bg-purple-600 text-white" type="submit" loading={isSubmitting}>
 						Update
 					</Button>
 				</form>

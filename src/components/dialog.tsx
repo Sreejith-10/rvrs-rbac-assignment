@@ -32,7 +32,7 @@ const Dialog: React.FC<DialogProps> = ({children}) => {
 			{isOpen &&
 				ReactDOM.createPortal(
 					<div className="absolute top-0 left-0 w-dvw h-full bg-black/80 z-50 flex items-center justify-center">
-						<div className="bg-white p-10 rounded-md shadow-md relative">
+						<div className="bg-gray-50 dark:bg-gray-800 p-10 rounded-md shadow-md relative">
 							{children[1]}
 							<div
 								className="absolute top-2 right-2 border border-slate-400 rounded-md cursor-pointer"

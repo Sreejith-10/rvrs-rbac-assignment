@@ -20,6 +20,7 @@ import {Column} from "@/types/table";
 import {DataTable} from "@/components/data-table";
 import {Dialog, DialogContent, DialogTrigger} from "@/components/dialog";
 import {useToast} from "@/hooks/useToast";
+import {Pill} from "@/components/pill";
 
 export default function Users() {
 	const [searchTerm, setSearchTerm] = useState("");
@@ -64,7 +65,12 @@ export default function Users() {
 		{header: "Name", key: "name", sortable: true},
 		{header: "Email", key: "email", sortable: true},
 		{header: "Role", key: "role", sortable: true},
-		{header: "Status", key: "status", sortable: true},
+		{
+			header: "Status",
+			key: "status",
+			sortable: true,
+			render: (row) => <Pill variant={row.status}>{row.status}</Pill>,
+		},
 		{
 			header: "Actions",
 			render: (row) => (
@@ -124,7 +130,7 @@ export default function Users() {
 						<Button className="bg-purple-500 hover:bg-purple-400">
 							<Link
 								href={"/users/create"}
-								className="flex gap-3 items-center justify-center">
+								className="flex gap-3 items-center justify-center dark:text-gray-50">
 								<PlusCircle />
 								Add User
 							</Link>

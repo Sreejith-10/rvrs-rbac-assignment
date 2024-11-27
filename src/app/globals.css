@@ -69,7 +69,7 @@ body {
 	}
 
 	body {
-		@apply bg-background text-foreground;
+		@apply bg-background text-foreground overflow-x-hidden;
 	}
 
 	[data-dropdown-content][data-visible="true"] {

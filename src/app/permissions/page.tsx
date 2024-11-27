@@ -123,7 +123,7 @@ export default function Permissions() {
 						<Button className="bg-purple-500 hover:bg-purple-400">
 							<Link
 								href={"/permissions/create"}
-								className="flex gap-3 items-center justify-center">
+								className="flex gap-3 items-center justify-center dark:text-gray-50">
 								<PlusCircle />
 								Add Permission
 							</Link>
